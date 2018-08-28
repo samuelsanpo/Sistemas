@@ -4,6 +4,7 @@ package Interfaces;
 import java.awt.Color;
 import java.awt.Window;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -29,7 +30,13 @@ public class Explosion extends javax.swing.JPanel {
       GraficasExplosion.setForeground(Color.black);
       SalirExplosion.setBackground(new java.awt.Color(0,0,0));
       SalirExplosion.setForeground(Color.white);
+      
+    
+
+      
+      
     }
+    
 
     
     @SuppressWarnings("unchecked")
@@ -72,15 +79,28 @@ public class Explosion extends javax.swing.JPanel {
 
         TablaExplosion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                { new Integer(23),  new Integer(34),  new Integer(43),  new Integer(3443)},
+                { new Integer(323),  new Integer(4),  new Integer(34),  new Integer(43)},
+                { new Integer(4),  new Integer(43),  new Integer(3),  new Integer(4)},
+                { new Integer(43),  new Integer(34),  new Integer(4),  new Integer(34)}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Enero", "Febrero", "Marzo", "Abril"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        TablaExplosion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaExplosionMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(TablaExplosion);
 
         SalirExplosion.setText("Salir");
@@ -204,6 +224,38 @@ public class Explosion extends javax.swing.JPanel {
         frame.setContentPane(chartPanel);
         frame.setVisible(true);
     }//GEN-LAST:event_GraficasExplosionActionPerformed
+
+    private void TablaExplosionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaExplosionMouseClicked
+        int fil = TablaExplosion.getSelectedRow();
+      int col = TablaExplosion.getSelectedColumn();
+      
+      if(fil>0){
+          int dialogButton = JOptionPane.YES_NO_OPTION;
+            JOptionPane.showConfirmDialog (null, "¿Quiere agregar un evento?","WARNING", dialogButton);
+            if(dialogButton == JOptionPane.YES_OPTION) {
+                Object [] Respuesta ={"Aumentar","Disminuir"}; 
+                Object opcion = JOptionPane.showInputDialog(null,"Selecciona una opcion", "Elegir",JOptionPane.QUESTION_MESSAGE,null,Respuesta, Respuesta[0]);
+                if(opcion.toString().equals("Aumentar")){
+                    String Causa = JOptionPane.showInputDialog(null,"Ingrese la causa del aumento");
+                    String valor = JOptionPane.showInputDialog(null,"Ingrese el porcentaje del aumento");
+                    int suma = Integer.parseInt(TablaExplosion.getValueAt(fil, col).toString())*Integer.parseInt(valor)/100 + Integer.parseInt(TablaExplosion.getValueAt(fil, col).toString());
+                    TablaExplosion.setValueAt(String.valueOf(suma), fil, col);
+                }else{
+                    if(opcion.toString().equals("Disminuir")){
+                    String Causa = JOptionPane.showInputDialog(null,"Ingrese la causa de la disminucion");
+                    String valor = JOptionPane.showInputDialog(null,"Ingrese el porcentaje de la disminucion");
+                    int resta =  Integer.parseInt(TablaExplosion.getValueAt(fil, col).toString()) - Integer.parseInt(TablaExplosion.getValueAt(fil, col).toString())*Integer.parseInt(valor)/100;
+                    TablaExplosion.setValueAt(String.valueOf(resta), fil, col);
+                }
+                    
+                }
+               
+            }else{
+                JOptionPane.showMessageDialog(null, "Dijo no");
+            }
+      }
+            
+    }//GEN-LAST:event_TablaExplosionMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
