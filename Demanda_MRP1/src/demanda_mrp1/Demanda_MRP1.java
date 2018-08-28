@@ -13,8 +13,7 @@ public class Demanda_MRP1 {
         f.setVisible (true); 
         f.setLocationRelativeTo(null);
         
-       Conex C = new Conex();
-       C.connect();
+      
        
        
     }

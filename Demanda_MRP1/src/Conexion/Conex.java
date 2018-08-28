@@ -12,21 +12,22 @@ import java.sql.*;
  */
 public class Conex {
    
- public static void connect(){
+   
+ public String driver = "com.mysql.jdbc.Driver";
 String url = "jdbc:mysql://localhost:3306/demanda_mrp1";
 String user = "root";
 String pass = "Online123";
-System.out.println("Conectando...");
-try(Connection connection = DriverManager.getConnection(url, user,pass)){
-System.out.println("Conectado!!");
- 
-}catch(SQLException e){
-System.out.println(e.getMessage());
-}
-}
+public Connection connect() {
+        Connection conn = null;
 
-    public static Object obtener() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, pass);
+             System.out.println ("Conectado");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return conn;
     }
-   
 }

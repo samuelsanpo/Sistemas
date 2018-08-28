@@ -308,6 +308,7 @@ public class Principal extends javax.swing.JFrame {
     dialogo.add(panel);
     dialogo.setVisible(true);
     dialogo.setSize(800, 500);   
+    
     }//GEN-LAST:event_InventarioBotonActionPerformed
 
   

@@ -12,6 +12,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javafx.application.Platform.exit;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import java.util.logging.*;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
@@ -19,11 +22,14 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-
+import Conexion.Conex;
 
 public class Historial extends javax.swing.JPanel {
 
-   DefaultTableModel modeloTabla;
+    DefaultTableModel modeloTabla;
+     Conex C = new Conex();
+      
+    
    
     public Historial() {
         initComponents();
@@ -35,15 +41,17 @@ public class Historial extends javax.swing.JPanel {
       SalirHistorial.setBackground(new java.awt.Color(0,0,0));
       SalirHistorial.setForeground(Color.white);
       
-      DefaultTableModel modeloTabla;
-    //conexion con = new conexion();
+     
     
     
-        
+       
         modeloTabla = new DefaultTableModel(null, getColumnas());
         setFilas();
-        //initComponents();
+        initComponents();
+        
+    
     }
+    
     
     private String[] getColumnas(){
         
@@ -53,10 +61,30 @@ public class Historial extends javax.swing.JPanel {
     }
     
     private void setFilas(){
-        
+        try{
+            String sql ="SELECT Cantidad_pedida from Pedido " ;
+            
+            PreparedStatement us = C.connect().prepareStatement(sql);
+            ResultSet res = us.executeQuery(); 
+            
+            Object datos[]= new Object[12];
+            
+            while ( res.next()){
+                        for ( int i=0; i<12; i++){
+                datos[i] = res.getObject(i+1);
+            }
+                        modeloTabla.addRow(datos);
+                                }            
+            res. close();
+            
+        }
+        catch(SQLException ex){
+            
+            Logger.getLogger(Historial.class.getName()).log(Level.SEVERE, null, ex);
+        }
       
     }
-
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -96,14 +124,7 @@ public class Historial extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(TablaProductos);
 
-        TablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        TablaHistorial.setModel(modeloTabla);
         jScrollPane3.setViewportView(TablaHistorial);
 
         SalirHistorial.setText("Salir");
@@ -114,6 +135,11 @@ public class Historial extends javax.swing.JPanel {
         });
 
         MostrarHistorial.setText("Mostrar Historial");
+        MostrarHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MostrarHistorialActionPerformed(evt);
+            }
+        });
 
         GraficasHistorial.setText("Graficas");
         GraficasHistorial.addActionListener(new java.awt.event.ActionListener() {
@@ -218,6 +244,10 @@ public class Historial extends javax.swing.JPanel {
         frame.setContentPane(chartPanel);
         frame.setVisible(true);
     }//GEN-LAST:event_GraficasHistorialActionPerformed
+
+    private void MostrarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MostrarHistorialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MostrarHistorialActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
