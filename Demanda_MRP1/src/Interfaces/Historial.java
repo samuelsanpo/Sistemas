@@ -11,8 +11,14 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javafx.application.Platform.exit;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 public class Historial extends javax.swing.JPanel {
@@ -76,7 +82,7 @@ public class Historial extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaProductos = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaHistorial = new javax.swing.JTable();
         SalirHistorial = new javax.swing.JButton();
@@ -88,7 +94,7 @@ public class Historial extends javax.swing.JPanel {
 
         jLabel2.setText("Historial de Ventas por producto");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Coca Cola"},
                 {"Agua Cielo"},
@@ -105,7 +111,7 @@ public class Historial extends javax.swing.JPanel {
                 "Productos"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(TablaProductos);
 
         TablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,6 +133,11 @@ public class Historial extends javax.swing.JPanel {
         MostrarHistorial.setText("Mostrar Historial");
 
         GraficasHistorial.setText("Graficas");
+        GraficasHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GraficasHistorialActionPerformed(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/coca-cola-41.gif"))); // NOI18N
 
@@ -194,17 +205,48 @@ public class Historial extends javax.swing.JPanel {
        w.setVisible(false);
     }//GEN-LAST:event_SalirHistorialActionPerformed
 
+    private void GraficasHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GraficasHistorialActionPerformed
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        int select = TablaProductos.getSelectedRow();
+        int columna = TablaHistorial.getColumnCount();
+        int i;
+        int vc;
+
+        for (vc = 0; vc < columna; vc++) {
+            String valor = TablaHistorial.getValueAt(select, vc).toString();
+
+            dataset.addValue(Integer.parseInt(valor), TablaProductos.getValueAt(select, 0).toString(), TablaHistorial.getColumnName(vc));
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Grafico de demanda para producto " + TablaProductos.getValueAt(select, 0).toString(),
+                "Producto",
+                "Demanda",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                true
+        );
+        JFrame frame = new JFrame("Grafica Demanda");
+        frame.setSize(800, 400);
+        frame.setLocationRelativeTo(getRootPane());
+        ChartPanel chartPanel = new ChartPanel(chart, false);
+        frame.setContentPane(chartPanel);
+        frame.setVisible(true);
+    }//GEN-LAST:event_GraficasHistorialActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GraficasHistorial;
     private javax.swing.JButton MostrarHistorial;
     private javax.swing.JButton SalirHistorial;
     private javax.swing.JTable TablaHistorial;
+    private javax.swing.JTable TablaProductos;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

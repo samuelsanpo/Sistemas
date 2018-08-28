@@ -5,6 +5,7 @@
  */
 package Interfaces;
 
+import java.awt.Color;
 import java.awt.Window;
 import javax.swing.SwingUtilities;
 
@@ -19,6 +20,10 @@ public class Producto extends javax.swing.JPanel {
      */
     public Producto() {
         initComponents();
+        
+      SalirProducto.setBackground(new java.awt.Color(0,0,0));
+      SalirProducto.setForeground(Color.white);
+        
     }
 
     /**

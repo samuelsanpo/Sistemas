@@ -3,7 +3,13 @@ package Interfaces;
 
 import java.awt.Color;
 import java.awt.Window;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -33,9 +39,9 @@ public class Explosion extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        TablaProductos = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
-        TablaDemanda = new javax.swing.JTable();
+        TablaExplosion = new javax.swing.JTable();
         SalirExplosion = new javax.swing.JButton();
         GenerarExplosion = new javax.swing.JButton();
         GraficasExplosion = new javax.swing.JButton();
@@ -45,7 +51,7 @@ public class Explosion extends javax.swing.JPanel {
 
         jLabel3.setText("Prediccion");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        TablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Coca Cola"},
                 {"Agua Cielo"},
@@ -62,9 +68,9 @@ public class Explosion extends javax.swing.JPanel {
                 "Productos"
             }
         ));
-        jScrollPane4.setViewportView(jTable2);
+        jScrollPane4.setViewportView(TablaProductos);
 
-        TablaDemanda.setModel(new javax.swing.table.DefaultTableModel(
+        TablaExplosion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -75,7 +81,7 @@ public class Explosion extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane5.setViewportView(TablaDemanda);
+        jScrollPane5.setViewportView(TablaExplosion);
 
         SalirExplosion.setText("Salir");
         SalirExplosion.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +98,11 @@ public class Explosion extends javax.swing.JPanel {
         });
 
         GraficasExplosion.setText("Graficas");
+        GraficasExplosion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GraficasExplosionActionPerformed(evt);
+            }
+        });
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/coca-cola-41.gif"))); // NOI18N
 
@@ -163,17 +174,48 @@ public class Explosion extends javax.swing.JPanel {
        w.setVisible(false);
     }//GEN-LAST:event_SalirExplosionActionPerformed
 
+    private void GraficasExplosionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GraficasExplosionActionPerformed
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        int select = TablaProductos.getSelectedRow();
+        int columna = TablaExplosion.getColumnCount();
+        int i;
+        int vc;
+
+        for (vc = 0; vc < columna; vc++) {
+            String valor = TablaExplosion.getValueAt(select, vc).toString();
+
+            dataset.addValue(Integer.parseInt(valor), TablaProductos.getValueAt(select, 0).toString(), TablaExplosion.getColumnName(vc));
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Grafico de demanda para producto " + TablaProductos.getValueAt(select, 0).toString(),
+                "Producto",
+                "Demanda",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                true
+        );
+        JFrame frame = new JFrame("Grafica Demanda");
+        frame.setSize(800, 400);
+        frame.setLocationRelativeTo(getRootPane());
+        ChartPanel chartPanel = new ChartPanel(chart, false);
+        frame.setContentPane(chartPanel);
+        frame.setVisible(true);
+    }//GEN-LAST:event_GraficasExplosionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GenerarExplosion;
     private javax.swing.JButton GraficasExplosion;
     private javax.swing.JButton SalirExplosion;
-    private javax.swing.JTable TablaDemanda;
+    private javax.swing.JTable TablaExplosion;
+    private javax.swing.JTable TablaProductos;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

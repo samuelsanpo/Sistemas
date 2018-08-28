@@ -181,7 +181,6 @@ public class Demanda extends javax.swing.JPanel {
 
     private void GraficasDemandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GraficasDemandaActionPerformed
 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
 int select = TablaProductos.getSelectedRow();
 int columna = TablaDemanda1.getColumnCount();
 int i;
@@ -203,7 +202,7 @@ JFreeChart chart = ChartFactory.createBarChart(
   true,
   true
 );
-JFrame frame = new JFrame("Graficas");
+JFrame frame = new JFrame("Grafica Demanda");
       frame.setSize(800, 400);
       frame.setLocationRelativeTo(getRootPane());
 ChartPanel chartPanel = new ChartPanel(chart, false);
