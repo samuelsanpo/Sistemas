@@ -1,11 +1,18 @@
 
 package Interfaces;
 
+import Conexion.Conex;
 import java.awt.Color;
 import java.awt.Window;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -24,14 +31,77 @@ public class Explosion extends javax.swing.JPanel {
     public Explosion() {
         initComponents();
         
-        GenerarExplosion.setBackground(new java.awt.Color(240,0,0));
-      GenerarExplosion.setForeground(Color.black);
+        
       GraficasExplosion.setBackground(new java.awt.Color(240,0,0));
       GraficasExplosion.setForeground(Color.black);
       SalirExplosion.setBackground(new java.awt.Color(0,0,0));
       SalirExplosion.setForeground(Color.white);
       
-    
+    try{
+            
+           
+           DefaultTableModel modeloTabla = new DefaultTableModel()  ;
+            TablaExplosion.setModel(modeloTabla);
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            Conex C = new Conex();
+            Connection con = C.connect();
+            
+            
+              String sql ="SELECT Cantidad_pedida FROM pedido " ;
+              ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            
+            ResultSetMetaData  raMd =  rs.getMetaData();
+            int CantidadColumnas = raMd.getColumnCount();
+            
+            modeloTabla.addColumn("Enero");
+            modeloTabla.addColumn("Febrero");
+            modeloTabla.addColumn("Marzo ");
+            modeloTabla.addColumn("Abril ");
+            modeloTabla.addColumn("Mayo ");
+            modeloTabla.addColumn("Junio ");
+            modeloTabla.addColumn("Julio ");
+            modeloTabla.addColumn("Agosto ");
+            modeloTabla.addColumn("Septiembre ");
+            modeloTabla.addColumn("Octubre ");
+            modeloTabla.addColumn("Noviembre ");
+            modeloTabla.addColumn("Diciembre");
+            
+            
+            
+            
+            
+            while (rs.next()){
+                
+                Object[] filas = new Object[CantidadColumnas];
+                
+                for( int i=0; i <CantidadColumnas; i++){
+                    
+                    filas[i] = rs.getObject(i+1);  
+                }
+                
+                modeloTabla.addRow(filas);
+                
+                
+                System.out.println(filas);
+                
+            }
+                    
+                    
+                    
+                    
+                    
+                    
+                    }
+        
+        
+        catch(SQLException ex){
+            
+            System.err.println(ex.toString());
+            
+        }
 
       
       
@@ -50,7 +120,6 @@ public class Explosion extends javax.swing.JPanel {
         jScrollPane5 = new javax.swing.JScrollPane();
         TablaExplosion = new javax.swing.JTable();
         SalirExplosion = new javax.swing.JButton();
-        GenerarExplosion = new javax.swing.JButton();
         GraficasExplosion = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
@@ -110,13 +179,6 @@ public class Explosion extends javax.swing.JPanel {
             }
         });
 
-        GenerarExplosion.setText("Generar Prediccion");
-        GenerarExplosion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GenerarExplosionActionPerformed(evt);
-            }
-        });
-
         GraficasExplosion.setText("Graficas");
         GraficasExplosion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,8 +207,6 @@ public class Explosion extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(SalirExplosion)
-                .addGap(184, 184, 184)
-                .addComponent(GenerarExplosion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -167,9 +227,7 @@ public class Explosion extends javax.swing.JPanel {
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SalirExplosion)
-                    .addComponent(GenerarExplosion))
+                .addComponent(SalirExplosion)
                 .addGap(19, 19, 19))
         );
 
@@ -184,10 +242,6 @@ public class Explosion extends javax.swing.JPanel {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void GenerarExplosionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerarExplosionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_GenerarExplosionActionPerformed
 
     private void SalirExplosionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirExplosionActionPerformed
         Window w = SwingUtilities.getWindowAncestor(Explosion.this);
@@ -259,7 +313,6 @@ public class Explosion extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton GenerarExplosion;
     private javax.swing.JButton GraficasExplosion;
     private javax.swing.JButton SalirExplosion;
     private javax.swing.JTable TablaExplosion;

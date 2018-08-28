@@ -34,58 +34,87 @@ public class Historial extends javax.swing.JPanel {
     public Historial() {
         initComponents();
         
-      MostrarHistorial.setBackground(new java.awt.Color(240,0,0));
-      MostrarHistorial.setForeground(Color.black);
+      
       GraficasHistorial.setBackground(new java.awt.Color(240,0,0));
       GraficasHistorial.setForeground(Color.black);
       SalirHistorial.setBackground(new java.awt.Color(0,0,0));
       SalirHistorial.setForeground(Color.white);
       
-     
+        try{
+            
+           
+           DefaultTableModel modeloTabla = new DefaultTableModel()  ;
+            TablaHistorial.setModel(modeloTabla);
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            Conex C = new Conex();
+            Connection con = C.connect();
+            
+            
+              String sql ="SELECT Cantidad_pedida FROM pedido " ;
+              ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            
+            ResultSetMetaData  raMd =  rs.getMetaData();
+            int CantidadColumnas = raMd.getColumnCount();
+            
+            modeloTabla.addColumn("Enero");
+            modeloTabla.addColumn("Febrero");
+            modeloTabla.addColumn("Marzo ");
+            modeloTabla.addColumn("Abril ");
+            modeloTabla.addColumn("Mayo ");
+            modeloTabla.addColumn("Junio ");
+            modeloTabla.addColumn("Julio ");
+            modeloTabla.addColumn("Agosto ");
+            modeloTabla.addColumn("Septiembre ");
+            modeloTabla.addColumn("Octubre ");
+            modeloTabla.addColumn("Noviembre ");
+            modeloTabla.addColumn("Diciembre");
+            
+            
+            
+            
+            
+            while (rs.next()){
+                
+                Object[] filas = new Object[CantidadColumnas];
+                
+                for( int i=0; i <CantidadColumnas; i++){
+                    
+                    filas[i] = rs.getObject(i+1);  
+                }
+                
+                modeloTabla.addRow(filas);
+                
+                
+                System.out.println(filas);
+                
+            }
+                    
+                    
+                    
+                    
+                    
+                    
+                    }
+        
+        
+        catch(SQLException ex){
+            
+            System.err.println(ex.toString());
+            
+        }
     
     
        
-        modeloTabla = new DefaultTableModel(null, getColumnas());
-        setFilas();
-        initComponents();
+    
         
     
     }
     
     
-    private String[] getColumnas(){
-        
-        String columna[] = new String[]{"Enero","Febrero","Marzo","Abril",
-            "Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
-        return columna;
-    }
-    
-    private void setFilas(){
-        try{
-            String sql ="SELECT Cantidad_pedida from Pedido " ;
-            
-            PreparedStatement us = C.connect().prepareStatement(sql);
-            ResultSet res = us.executeQuery(); 
-            
-            Object datos[]= new Object[12];
-            
-            while ( res.next()){
-                        for ( int i=0; i<12; i++){
-                datos[i] = res.getObject(i+1);
-            }
-                        modeloTabla.addRow(datos);
-                                }            
-            res. close();
-            
-        }
-        catch(SQLException ex){
-            
-            Logger.getLogger(Historial.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      
-    }
-    
-    
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,7 +126,6 @@ public class Historial extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaHistorial = new javax.swing.JTable();
         SalirHistorial = new javax.swing.JButton();
-        MostrarHistorial = new javax.swing.JButton();
         GraficasHistorial = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
@@ -124,20 +152,20 @@ public class Historial extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(TablaProductos);
 
-        TablaHistorial.setModel(modeloTabla);
+        TablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
         jScrollPane3.setViewportView(TablaHistorial);
 
         SalirHistorial.setText("Salir");
         SalirHistorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SalirHistorialActionPerformed(evt);
-            }
-        });
-
-        MostrarHistorial.setText("Mostrar Historial");
-        MostrarHistorial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MostrarHistorialActionPerformed(evt);
             }
         });
 
@@ -149,43 +177,44 @@ public class Historial extends javax.swing.JPanel {
         });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/coca-cola-41.gif"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(MostrarHistorial)
-                .addGap(74, 74, 74))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(SalirHistorial)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(GraficasHistorial)
-                .addGap(88, 88, 88))
+                .addGap(47, 47, 47))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(300, Short.MAX_VALUE)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(274, 274, 274))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(MostrarHistorial)
-                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,14 +274,13 @@ public class Historial extends javax.swing.JPanel {
         frame.setVisible(true);
     }//GEN-LAST:event_GraficasHistorialActionPerformed
 
-    private void MostrarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MostrarHistorialActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MostrarHistorialActionPerformed
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GraficasHistorial;
-    private javax.swing.JButton MostrarHistorial;
     private javax.swing.JButton SalirHistorial;
     private javax.swing.JTable TablaHistorial;
     private javax.swing.JTable TablaProductos;

@@ -53,9 +53,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="SalirExplosion" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
-                  <Component id="GenerarExplosion" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="29" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -80,10 +78,7 @@
                       <Component id="jScrollPane4" alignment="1" min="-2" pref="187" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="SalirExplosion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="GenerarExplosion" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="SalirExplosion" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -204,14 +199,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SalirExplosionActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="GenerarExplosion">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Generar Prediccion"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GenerarExplosionActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="GraficasExplosion">
