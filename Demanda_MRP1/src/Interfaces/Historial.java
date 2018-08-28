@@ -54,24 +54,7 @@ public class Historial extends javax.swing.JPanel {
     
     private void setFilas(){
         
-       try{
-           String sql = "select ";
-                PreparedStatement us = Conex.obtener().prepareStatement(sql);
-                ResultSet res = us.executeQuery();
-                
-                Object datos[]=new Object[12];
-                
-         while(res.next()){
-             for(int i = 0; i<12;i++){
-                 datos[i] = res.getObject(i + 1);
-                 
-             }
-             modeloTabla.addRow(datos);
-         }
-         res.close();
-       }catch(SQLException ex){
-           Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE,null,ex);
-       }
+      
     }
 
     
