@@ -39,50 +39,53 @@ public class Demanda extends javax.swing.JPanel {
             TablaDemanda.setModel(modeloTabla);
             PreparedStatement ps = null;
             ResultSet rs = null;
+            PreparedStatement ps2 = null;
+            ResultSet rs2 = null;
             Conex C = new Conex();
             Connection con = C.connect();
             
             
-              String sql ="SELECT Cantidad_pedida FROM pedido " ;
+              String sql ="SELECT Enero, Febrero, Marzo, Abril, Mayo, Junio,Julio, Agosto,Septiembre,Octubre, Noviembre, Diciembre FROM Historico " ;
+            
               ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+              rs = ps.executeQuery();
+             
             
-            
+             
             ResultSetMetaData  raMd =  rs.getMetaData();
             int CantidadColumnas = raMd.getColumnCount();
             
-            modeloTabla.addColumn("Enero");
-            modeloTabla.addColumn("Febrero");
-            modeloTabla.addColumn("Marzo ");
-            modeloTabla.addColumn("Abril ");
-            modeloTabla.addColumn("Mayo ");
-            modeloTabla.addColumn("Junio ");
-            modeloTabla.addColumn("Julio ");
-            modeloTabla.addColumn("Agosto ");
-            modeloTabla.addColumn("Septiembre ");
-            modeloTabla.addColumn("Octubre ");
-            modeloTabla.addColumn("Noviembre ");
-            modeloTabla.addColumn("Diciembre");
             
-            
-            
-            
+         modeloTabla.addColumn("Enero");
+         modeloTabla.addColumn("Febrero");
+         modeloTabla.addColumn("Marzo");
+         modeloTabla.addColumn("Abril");
+         modeloTabla.addColumn("Mayo");
+         modeloTabla.addColumn("Junio");
+         modeloTabla.addColumn("Julio");
+         modeloTabla.addColumn("Agosto");
+         modeloTabla.addColumn("Septiembre");
+         modeloTabla.addColumn("Octubre");
+         modeloTabla.addColumn("Noviembre");
+         modeloTabla.addColumn("Diciembre");
+         
             
             while (rs.next()){
                 
                 Object[] filas = new Object[CantidadColumnas];
+                  
                 
-                for( int i=0; i <CantidadColumnas; i++){
+                     for( int i=0; i <CantidadColumnas; i++){
                     
                     filas[i] = rs.getObject(i+1);  
                 }
                 
                 modeloTabla.addRow(filas);
-                
-                
-                System.out.println(filas);
-                
+    
             }
+            
+           
+          
                     
                     
                     

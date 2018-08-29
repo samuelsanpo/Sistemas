@@ -51,7 +51,7 @@ public class Historial extends javax.swing.JPanel {
             Connection con = C.connect();
             
             
-              String sql ="SELECT Cantidad_pedida FROM pedido " ;
+             String sql ="SELECT Enero, Febrero, Marzo, Abril, Mayo, Junio,Julio, Agosto,Septiembre,Octubre, Noviembre, Diciembre FROM Historico " ;
               ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             

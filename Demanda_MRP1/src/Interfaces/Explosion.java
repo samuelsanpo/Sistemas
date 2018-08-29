@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -48,7 +50,7 @@ public class Explosion extends javax.swing.JPanel {
             Connection con = C.connect();
             
             
-              String sql ="SELECT Cantidad_pedida FROM pedido " ;
+              String sql ="SELECT Enero, Febrero, Marzo, Abril, Mayo, Junio,Julio, Agosto,Septiembre,Octubre, Noviembre, Diciembre FROM Historico " ;
               ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             
@@ -294,6 +296,28 @@ public class Explosion extends javax.swing.JPanel {
                     String valor = JOptionPane.showInputDialog(null,"Ingrese el porcentaje del aumento");
                     int suma = Integer.parseInt(TablaExplosion.getValueAt(fil, col).toString())*Integer.parseInt(valor)/100 + Integer.parseInt(TablaExplosion.getValueAt(fil, col).toString());
                     TablaExplosion.setValueAt(String.valueOf(suma), fil, col);
+                  
+                    Conex C = new Conex();
+                    Connection con = C.connect();
+                    PreparedStatement ps = null;
+                    ResultSet rs = null;
+                    try {
+                      
+                     String sql ="UPDATE " ;
+                        ps = con.prepareStatement(sql);
+                        rs = ps.executeQuery();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Explosion.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                     
+                 
+                     
+                     
+                     
+                     
+                     
+                     
                 }else{
                     if(opcion.toString().equals("Disminuir")){
                     String Causa = JOptionPane.showInputDialog(null,"Ingrese la causa de la disminucion");
@@ -315,7 +339,7 @@ public class Explosion extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GraficasExplosion;
     private javax.swing.JButton SalirExplosion;
-    private javax.swing.JTable TablaExplosion;
+    public javax.swing.JTable TablaExplosion;
     private javax.swing.JTable TablaProductos;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel3;

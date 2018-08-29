@@ -194,7 +194,7 @@ public class MateriaPrima extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SalirMP;
-    private javax.swing.JTable TablaM;
+    public javax.swing.JTable TablaM;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;

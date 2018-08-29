@@ -235,7 +235,7 @@ public class Producto extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SalirProducto;
-    private javax.swing.JTable TablaProducto;
+    public javax.swing.JTable TablaProducto;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
